@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: vybora
+    runtime: node
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    disk:
+      name: vybora-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: SESSION_DAYS
+        value: "14"
+      - key: VYBORA_DB_PATH
+        value: /var/data/vybora.sqlite
+      - key: VYBORA_UPLOADS_DIR
+        value: /var/data/uploads
